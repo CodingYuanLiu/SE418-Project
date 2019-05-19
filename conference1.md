@@ -1,0 +1,10 @@
+# 同去网活动订阅
+## Login
+* OAuth
+## spider
+* 存成json 
+* 暴露接口，供给parser
+## parser
+* json分析关键词
+* 存储到resource
+* 交互前端

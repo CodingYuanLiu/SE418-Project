@@ -12,7 +12,8 @@ Crawl the data from Tongqu website with web crawler, analyse the content(titles 
 * Docker
 * Vue
 * OAuth
-* Python+Selenium (For crawler)
+* Jenkins + BlueOcean
+* Python + Selenium (For crawler)
 * And So on...
 ## Coding Standard
 [Google Java Style Guide](https://google.github.io/styleguide/javaguide.html)
