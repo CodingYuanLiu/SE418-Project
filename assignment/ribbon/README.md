@@ -16,3 +16,16 @@ id can be 1 or 2, other id will be ignored
 ```java
 
 ```
+> WeightedRoundRobinRule<br/>
+
+Fake weighted RoundRobinRule. 
+Our idea is to improve the base roundRobinRule. Key idea is ``maxResponseTime`` and each 
+``responseTime`` of single server. ``weight`` is the (maxResponseTime + 1) / (responseTime + 1).
+
+For example :<br/>
+ResponseTime for A is 0.5s, and maxResponseTime in the all Server list is 1s.
+Then weight for A is 2. During the access to server group, it will access A twice and arter that, 
+move on the the next server.
+
+
+

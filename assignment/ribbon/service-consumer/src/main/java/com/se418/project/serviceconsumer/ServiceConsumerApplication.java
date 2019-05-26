@@ -1,10 +1,7 @@
 package com.se418.project.serviceconsumer;
 
-import com.netflix.loadbalancer.ILoadBalancer;
-import com.netflix.loadbalancer.IRule;
-import com.netflix.loadbalancer.RandomRule;
-import com.netflix.loadbalancer.Server;
-import com.se418.project.serviceconsumer.Configuration.MyIRule;
+import com.netflix.loadbalancer.*;
+import com.se418.project.serviceconsumer.Configuration.WeightedRoundRobinRule;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
@@ -23,19 +20,19 @@ public class ServiceConsumerApplication {
 	}
 
 	/* This bean can change the default load balanced strategy */
-
+	/*
 	@Bean
 	public IRule iRule() {
 		return new RandomRule();
 	}
-
+	*/
 	/* Implement your own load balanced strategy */
-	/*
+
 	@Bean
 	public IRule myOwnIRule() {
-		return new MyIRule();
+		return new WeightedRoundRobinRule();
 	}
-	*/
+
 	public static void main(String[] args) {
 		SpringApplication.run(ServiceConsumerApplication.class, args);
 	}
