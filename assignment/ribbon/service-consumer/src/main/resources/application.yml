@@ -1,0 +1,15 @@
+server:
+  port: 9000
+spring:
+  application:
+    name: service-consumer
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+eureka:
+  client:
+    fetch-registry: true
+    register-with-eureka: true
+    service-url:
+      defaultZone: http://localhost:8800/eureka
+  instance:
+    prefer-ip-address: true
