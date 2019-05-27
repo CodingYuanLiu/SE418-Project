@@ -69,4 +69,26 @@ public class Act {
         ruledesc_text = jsonObject.getString("ruledesc_text");
         expired = (time_status == 4);
     }
+
+    public JSONObject getAct() {
+        JSONObject resp = new JSONObject();
+        resp.put("actid", actid);
+        resp.put("name", name);
+        resp.put("type", type);
+        resp.put("typename", typename);
+        resp.put("location", location);
+        resp.put("source", source);
+        resp.put("create_time", create_time.toString());
+        resp.put("sign_end_time", sign_end_time.toString());
+        resp.put("sign_start_time", sign_start_time.toString());
+        resp.put("start_time", start_time.toString());
+        resp.put("end_time", end_time.toString());
+        resp.put("member_count", member_count);
+        resp.put("max_member", max_member);
+        resp.put("time_status", time_status);
+        resp.put("time_status_str", time_status_str);
+        resp.put("body_text", body_text);
+        resp.put("ruledesc_text", ruledesc_text);
+        return resp;
+    }
 }

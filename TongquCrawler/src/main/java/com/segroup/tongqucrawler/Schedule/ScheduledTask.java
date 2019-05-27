@@ -1,35 +1,23 @@
-package com.segroup.tongqucrawler.Controller;
+package com.segroup.tongqucrawler.Schedule;
 
 import com.segroup.tongqucrawler.Crawler.ActNotExistException;
 import com.segroup.tongqucrawler.Crawler.TongquCrawler;
 import com.segroup.tongqucrawler.Entity.Act;
 import com.segroup.tongqucrawler.Repository.ActRepository;
-import com.segroup.tongqucrawler.Repository.TCSystemRepository;
-import net.sf.json.JSONObject;
-import org.omg.PortableInterceptor.ACTIVE;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.stereotype.Component;
 
-@RestController
-@EnableAutoConfiguration
-
-public class Controller {
+@EnableScheduling
+@Component
+public class ScheduledTask {
     @Autowired
     private ActRepository actRepository;
 
-    @RequestMapping(value = "/test", method = RequestMethod.GET)
-    @ResponseBody
-    public JSONObject test() {
-        JSONObject response = new JSONObject();
-        response.put("status", 200);
-        response.put("data", new TongquCrawler().getLatestActId());
-        return response;
-    }
-
-    @RequestMapping(value = "/update", method = RequestMethod.POST)
-    @ResponseBody
-    public void update(@RequestParam("from") int actid) {
+    @Scheduled(cron = "0 0/1 * * * ?")
+    private void updateTongqu() {
+        int actid = 20001;
         TongquCrawler tc = new TongquCrawler();
         int latestActid = tc.getLatestActId();
         while (actid <= latestActid) {

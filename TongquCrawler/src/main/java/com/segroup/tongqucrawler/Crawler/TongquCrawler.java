@@ -16,12 +16,33 @@ import java.io.InputStream;
 public class TongquCrawler {
     private int actId;
     private CloseableHttpClient httpclient;
-    public JSONObject actJson;
-    public JSONObject minActJson;
+    private JSONObject actJson;
+    private JSONObject minActJson;
 
     public TongquCrawler() {
         httpclient = HttpClients.createDefault();
         minActJson = new JSONObject();
+    }
+
+    public int getLatestActId() {
+        String url = "https://tongqu.me/act/type?type=-1&status=0&order=act.create_time";
+        HttpGet httpGet = new HttpGet(url);
+        try {
+            CloseableHttpResponse response = httpclient.execute(httpGet);
+            HttpEntity entity = response.getEntity();
+            if (entity != null) {
+                String htmlString = IOUtils.toString(entity.getContent(), "UTF-8");
+                try {
+                    htmlString = htmlString.substring(23 + htmlString.indexOf("var g_init_type_acts = "), htmlString.indexOf(";var g_acts_recommend = "));
+                    return JSONObject.fromObject(htmlString).getJSONArray("acts").getJSONObject(0).getInt("actid");
+                } catch (StringIndexOutOfBoundsException e) {
+                    return -1;
+                }
+            }
+        } catch (IOException e) {
+            return -1;
+        }
+        return -1;
     }
 
     private void initActInfo() throws IOException, ActNotExistException {
