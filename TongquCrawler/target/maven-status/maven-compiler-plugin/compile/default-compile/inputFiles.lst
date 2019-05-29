@@ -1,0 +1,8 @@
+/home/dfy/Github/SE418-Project/TongquCrawler/src/main/java/com/segroup/tongqucrawler/TongquCrawlerApplication.java
+/home/dfy/Github/SE418-Project/TongquCrawler/src/main/java/com/segroup/tongqucrawler/Crawler/TongquCrawler.java
+/home/dfy/Github/SE418-Project/TongquCrawler/src/main/java/com/segroup/tongqucrawler/Schedule/ScheduledTask.java
+/home/dfy/Github/SE418-Project/TongquCrawler/src/main/java/com/segroup/tongqucrawler/Repository/ActRepository.java
+/home/dfy/Github/SE418-Project/TongquCrawler/src/main/java/com/segroup/tongqucrawler/Controller/Controller.java
+/home/dfy/Github/SE418-Project/TongquCrawler/src/main/java/com/segroup/tongqucrawler/Entity/TCSystem.java
+/home/dfy/Github/SE418-Project/TongquCrawler/src/main/java/com/segroup/tongqucrawler/Repository/TCSystemRepository.java
+/home/dfy/Github/SE418-Project/TongquCrawler/src/main/java/com/segroup/tongqucrawler/Entity/Act.java

@@ -1,0 +1,8 @@
+com/segroup/tongqucrawler/Repository/ActRepository.class
+com/segroup/tongqucrawler/Crawler/TongquCrawler.class
+com/segroup/tongqucrawler/Entity/Act.class
+com/segroup/tongqucrawler/Schedule/ScheduledTask.class
+com/segroup/tongqucrawler/TongquCrawlerApplication.class
+com/segroup/tongqucrawler/Controller/Controller.class
+com/segroup/tongqucrawler/Repository/TCSystemRepository.class
+com/segroup/tongqucrawler/Entity/TCSystem.class
