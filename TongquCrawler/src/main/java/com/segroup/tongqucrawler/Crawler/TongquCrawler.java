@@ -1,5 +1,6 @@
 package com.segroup.tongqucrawler.Crawler;
 
+import net.sf.json.JSONException;
 import net.sf.json.JSONNull;
 import net.sf.json.JSONObject;
 import org.apache.commons.io.IOUtils;
@@ -18,6 +19,7 @@ public class TongquCrawler {
     private CloseableHttpClient httpclient;
     private JSONObject actJson;
     private JSONObject minActJson;
+    private boolean isActExisted;
 
     public TongquCrawler() {
         httpclient = HttpClients.createDefault();
@@ -45,7 +47,8 @@ public class TongquCrawler {
         return -1;
     }
 
-    private void initActInfo() throws IOException, ActNotExistException {
+
+    private void initActInfo() throws IOException {
         String url = "https://tongqu.me/act/" + actId;
         HttpGet httpGet = new HttpGet(url);
         CloseableHttpResponse responseGet = httpclient.execute(httpGet);
@@ -56,9 +59,16 @@ public class TongquCrawler {
             try {
                 htmlString = htmlString.substring(18 + htmlString.indexOf("var g_main_info = "), htmlString.indexOf(";var g_comment_info ="));
             } catch (StringIndexOutOfBoundsException e) {
-                throw new ActNotExistException();
+                isActExisted = false;
+                return;
             }
-            actJson = JSONObject.fromObject(htmlString);
+            isActExisted = true;
+            try {
+                actJson = JSONObject.fromObject(htmlString);
+            } catch (JSONException e) {
+                isActExisted = false;
+                return;
+            }
             actJson.put("body_text", Jsoup.parse(actJson.getString("body")).text());
             actJson.put("ruledesc_text", Jsoup.parse(actJson.getString("ruledesc")).text());
             for (Object key : actJson.keySet()) {
@@ -86,14 +96,12 @@ public class TongquCrawler {
         copyTo(actJson, minActJson, a);
     }
 
-    public void setActId(int actId) throws ActNotExistException {
+    public void setActId(int actId) {
         this.actId = actId;
         try {
             initActInfo();
         } catch (IOException e) {
             actJson = null;
-        } catch (ActNotExistException e) {
-            throw e;
         }
     }
 
@@ -107,5 +115,9 @@ public class TongquCrawler {
 
     public JSONObject getMinActJson() {
         return minActJson;
+    }
+
+    public boolean isActExisted() {
+        return isActExisted;
     }
 }

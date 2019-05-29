@@ -21,15 +21,15 @@ public class Act {
     @Column
     public String source;
     @Column
-    public Timestamp create_time;
+    public String create_time;
     @Column
-    public Timestamp start_time;
+    public String start_time;
     @Column
-    public Timestamp end_time;
+    public String end_time;
     @Column
-    public Timestamp sign_start_time;
+    public String sign_start_time;
     @Column
-    public Timestamp sign_end_time;
+    public String sign_end_time;
     @Column
     public Integer member_count;
     @Column
@@ -38,12 +38,10 @@ public class Act {
     public Integer time_status;
     @Column
     public String time_status_str;
-    @Column(length = 4095)
+    @Column(length = 16384)
     public String body_text;
-    @Column(length = 4095)
+    @Column(length = 16384)
     public String ruledesc_text;
-    @Column
-    public Boolean expired; // Expired act never updates
 
     public Act() {
 
@@ -56,18 +54,17 @@ public class Act {
         typename = jsonObject.getString("typename");
         location = jsonObject.getString("location");
         source = jsonObject.getString("source");
-        create_time = java.sql.Timestamp.valueOf(jsonObject.getString("create_time"));
-        sign_end_time = java.sql.Timestamp.valueOf(jsonObject.getString("sign_end_time") + ":00");
-        sign_start_time = java.sql.Timestamp.valueOf(jsonObject.getString("sign_start_time") + ":00");
-        start_time = java.sql.Timestamp.valueOf(jsonObject.getString("start_time") + ":00");
-        end_time = java.sql.Timestamp.valueOf(jsonObject.getString("end_time") + ":00");
+        create_time = jsonObject.getString("create_time");
+        sign_end_time = jsonObject.getString("sign_end_time");
+        sign_start_time = jsonObject.getString("sign_start_time");
+        start_time = jsonObject.getString("start_time");
+        end_time = jsonObject.getString("end_time");
         member_count = jsonObject.getInt("member_count");
         max_member = jsonObject.getInt("max_member");
         time_status = jsonObject.getInt("time_status");
         time_status_str = jsonObject.getString("time_status_str");
         body_text = jsonObject.getString("body_text");
         ruledesc_text = jsonObject.getString("ruledesc_text");
-        expired = (time_status == 4);
     }
 
     public JSONObject getAct() {
@@ -78,11 +75,11 @@ public class Act {
         resp.put("typename", typename);
         resp.put("location", location);
         resp.put("source", source);
-        resp.put("create_time", create_time.toString());
-        resp.put("sign_end_time", sign_end_time.toString());
-        resp.put("sign_start_time", sign_start_time.toString());
-        resp.put("start_time", start_time.toString());
-        resp.put("end_time", end_time.toString());
+        resp.put("create_time", create_time);
+        resp.put("sign_end_time", sign_end_time);
+        resp.put("sign_start_time", sign_start_time);
+        resp.put("start_time", start_time);
+        resp.put("end_time", end_time);
         resp.put("member_count", member_count);
         resp.put("max_member", max_member);
         resp.put("time_status", time_status);

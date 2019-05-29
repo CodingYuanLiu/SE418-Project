@@ -32,7 +32,7 @@ public class ScheduledTask {
         for (int actid = 1; actid <= latestActid; actid++) {
             Act act = actRepository.findByActid(actid);
             if (act == null || act.time_status == 1) {
-                if (act == null & actid <= updaterange) continue;
+                if (act == null && actid <= updaterange) continue;
                 if (act == null) {
                     System.out.println("[TongquCrawler] Detect new act: #" + actid);
                 } else {
