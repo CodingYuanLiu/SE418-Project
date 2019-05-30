@@ -3,8 +3,9 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                sh 'cd TongquCrawler'
+                sh 'cd ./TongquCrawler'
 		sh 'pwd'
+		sh 'ls'
                 sh 'mvn -B -DskipTests clean package'
             }
         }
