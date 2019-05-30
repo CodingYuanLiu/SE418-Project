@@ -12,3 +12,5 @@ mvn docker:build
 cd ../auth-server
 mvn docker:build
 
+cd ../TongquParser
+mvn docker:build

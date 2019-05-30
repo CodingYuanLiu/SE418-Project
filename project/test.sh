@@ -16,3 +16,6 @@ cd ../auth-server
 echo "Start test auth-server"
 mvn test
 
+cd ../TongquParser
+echo "Start test Parser"
+mvn test

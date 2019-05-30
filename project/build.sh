@@ -4,3 +4,5 @@ cd service-discovery
 mvn -B -DskipTests clean package
 cd ../auth-server/
 mvn -B -DskipTests clean package
+cd ../TongquParser
+mvn -B -DskipTests clean package
