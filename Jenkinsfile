@@ -4,8 +4,8 @@ pipeline {
         stage('Build') {
             steps {
                 sh 'cd TongquCrawler'
+		sh 'pwd'
                 sh 'mvn -B -DskipTests clean package'
-		maven 'mvn ---version'
             }
         }
         stage('Test') {
