@@ -1,4 +1,0 @@
--------------------------------------------------------------------------------
-Test set: com.se418.project.authserver.AuthServerApplicationTests
--------------------------------------------------------------------------------
-Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 10.597 s - in com.se418.project.authserver.AuthServerApplicationTests
