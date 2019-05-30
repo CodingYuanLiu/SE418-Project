@@ -1,0 +1,18 @@
+server:
+  port: 9100
+spring:
+  application:
+    name: auth-server
+eureka:
+  instance:
+    prefer-ip-address: true
+  client:
+    fetch-registry: true
+    register-with-eureka: true
+    service-url:
+      defaultZone: http://localhost:9000/eureka/
+security:
+  oauth2:
+    client:
+      client-secret: 123456
+      client-id: summer855
