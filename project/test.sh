@@ -11,9 +11,8 @@
 cd service-discovery
 echo "Start test service-discovery"
 mvn test
-junit target/surefire-reports/*.xml
 
 cd ../auth-server
 echo "Start test auth-server"
 mvn test
-junit target/surefire-reports/*.xml
+
