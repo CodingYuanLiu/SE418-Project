@@ -3,26 +3,17 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-		sh 'ls'
-                sh 'cd ./TongquCrawler'
-		sh 'pwd'
-		sh 'ls'
-                sh 'cd ./TongquCrawler && mvn -B -DskipTests clean package'
+		sh 'cd project && ./build.sh'
             }
         }
         stage('Test') {
             steps {
-                sh 'mvn test'
-            }
-            post {
-                always {
-                    junit 'target/surefire-reports/*.xml'
-                }
+                sh 'cd project && ./test.sh'
             }
         }
         stage('deliver') {
             steps {
-                sh './jenkins/scripts/deliver.sh'
+		sh 'cd project && ./deliver.sh'
             }
         }
     }
