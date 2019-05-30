@@ -64,9 +64,44 @@ public class ParseController {
         for(Iterator it  = JSON.parseArray(jsonContent).iterator();it.hasNext();){
             JSONObject activity = (JSONObject)it.next();
             String body = activity.getString("body_text");
-            for(SegToken segtoken : segmenter.process(body,JiebaSegmenter.SegMode.SEARCH)){
+            List<SegToken> SegtokenList = segmenter.process(body,JiebaSegmenter.SegMode.SEARCH);
+            /* Search for special seiee activities */
+
+            for(int i = 0; i < SegtokenList.size();i++){
+                SegToken segtoken = SegtokenList.get(i);
                 String str = segtoken.word;
-                if(str.equals("满分素拓") || str.equals("95分素拓") || str.equals("素拓")) {
+                if(str.equals("满分素拓") || str.equals("95分素拓") ||str.equals("90分素拓")) {
+                    String prestr = i > 1 ? SegtokenList.get(i - 2).word : "";
+                    if (i > 1 && prestr.equals("1151") || prestr.equals("1152") || prestr.equals("1081")) {
+                        activity.put("Qnum", prestr);
+                        if (str.equals("满分素拓")) {
+                            activity.put("Score", 100);
+                        } else if (str.equals("95分素拓")) {
+                            activity.put("Score", 95);
+                        } else if (str.equals("90分素拓")) {
+                            activity.put("Score", 90);
+                        } else {
+                            activity.put("Score", 0);
+                        }
+                    } else {
+                        activity.put("Qnum", "0");
+                        activity.put("Score", "0");
+                    }
+                    result.add(activity);
+                    break;
+                }
+            }
+
+            /* Search for special seiee activities */
+            for(int i = 0; i< SegtokenList.size();i++){
+                SegToken segtoken = SegtokenList.get(i);
+                String str = segtoken.word;
+                if(str.equals("满分素拓") || str.equals("90分素拓") || str.equals("95分素拓")){
+                    break;
+                }
+                if(str.equals("素拓")){
+                    activity.put("Qnum","0");
+                    activity.put("Score","0");
                     result.add(activity);
                     break;
                 }
