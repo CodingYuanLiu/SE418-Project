@@ -83,10 +83,6 @@
 							<directory>${project.build.directory}</directory>
 							<include>${project.build.finalName}.jar</include>
 						</resource>
-						<resource>
-							<targetPath>/</targetPath>
-
-						</resource>
 					</resources>
 				</configuration>
 			</plugin>
