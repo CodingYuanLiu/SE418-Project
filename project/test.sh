@@ -19,3 +19,7 @@ mvn test
 cd ../TongquParser
 echo "Start test Parser"
 mvn test
+
+cd ../gateway
+echo "Start test gateway"
+mvn test

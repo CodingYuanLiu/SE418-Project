@@ -6,3 +6,5 @@ cd ../auth-server/
 mvn -B -DskipTests clean package
 cd ../TongquParser
 mvn -B -DskipTests clean package
+cd ../gateway/
+mvn -B -DskipTests clean package

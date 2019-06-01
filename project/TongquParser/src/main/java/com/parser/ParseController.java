@@ -58,7 +58,7 @@ public class ParseController {
 
     @RequestMapping("/parse")
     public JSONArray Parse(@RequestParam(required = false,defaultValue = "满分素拓")String text){
-        String jsonContent=FileUtil.ReadFile("./src/main/resources/test.json");
+        String jsonContent=FileUtil.ReadFile("./TongquParser/src/main/resources/test.json");
         JiebaSegmenter segmenter = new JiebaSegmenter();
         JSONArray result = new JSONArray();
         for(Iterator it  = JSON.parseArray(jsonContent).iterator();it.hasNext();){
