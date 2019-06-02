@@ -19,7 +19,7 @@ public class ScheduledTask {
     @Autowired
     private TCSystemRepository tcSystemRepository;
 
-    @Scheduled(cron = "0 0/1 * * * ?")
+    @Scheduled(cron = "0 0/10 * * * ?")
     private void updateTongqu() {
         TCSystem last_updated = tcSystemRepository.findByTcskey("last_updated");
         if (last_updated == null) {

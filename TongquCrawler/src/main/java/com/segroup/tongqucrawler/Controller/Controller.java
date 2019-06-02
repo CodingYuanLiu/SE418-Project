@@ -57,12 +57,14 @@ public class Controller {
                 tongquCrawler.setActId(actid);
                 if (tongquCrawler.isActExisted()) {
                     act = new Act(tongquCrawler.getMinActJson());
+                    actRepository.deleteByActid(actid);
                     actRepository.save(act);
                 }
             }
         }
         System.out.println("[TongquCrawler] Complete. Latest update: act #" + latestActid);
         last_updated.set(String.valueOf(latestActid));
+        tcSystemRepository.deleteByTcskey("last_updated");
         tcSystemRepository.save(last_updated);
     }
 }

@@ -1,9 +1,12 @@
 package com.segroup.tongqucrawler.Entity;
 
+import lombok.Data;
+import org.springframework.data.mongodb.core.mapping.Document;
+
 import javax.persistence.*;
 
-@Entity
-@Table(name = "tcsystem")
+@Data
+@Document(collection = "tcsystem")
 public class TCSystem {
     @Id
     private String tcskey;
