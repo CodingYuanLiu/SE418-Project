@@ -1,4 +1,16 @@
 #!/usr/bin/env bash
+
+# Stop all containers
+containers=$(docker ps -aq)
+if test -z "$containers"
+	then echo "No containers running~"
+	else 
+		docker stop $(docker ps -aq)
+		docker rm $(docker ps -aq)
+fi
+
+# Run on demand
+
 docker run -p 9000:9000 -d --name=eureka-server \
 	summer855/service-discovery
 docker run -p 9100:9100 -d --name=auth-server \

@@ -16,7 +16,7 @@ zuul:
     resourse:
       service-id: tongqu-parser
       path: /resources/tongqu
-
+  sensitive-headers: Cookie, Set-Cookie
 management:
   endpoints:
     web:
