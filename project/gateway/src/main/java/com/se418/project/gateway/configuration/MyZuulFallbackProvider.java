@@ -11,7 +11,7 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.Charset;
-/*
+
 @Component
 public class MyZuulFallbackProvider implements FallbackProvider {
     @Override
@@ -59,4 +59,4 @@ public class MyZuulFallbackProvider implements FallbackProvider {
 }
 
 
- */
+
