@@ -1,0 +1,20 @@
+server:
+  port: 9200
+spring:
+  application:
+    name: tongqu-parser
+eureka:
+  client:
+    service-url:
+      defaultZone: http://eureka-server:9000/eureka/
+    fetch-registry: true
+    register-with-eureka: true
+security:
+  oauth2:
+    client:
+      client-secret: 123456
+      client-id: summer855
+      access-token-uri: http://auth-server/oauth/token
+      user-authorization-uri: http://auth-server/users/get
+    resource:
+      user-info-uri: http://auth-server/users/get

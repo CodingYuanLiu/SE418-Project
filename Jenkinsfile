@@ -3,24 +3,23 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                sh 'cd TongquCrawler'
-                sh 'mvn -B -DskipTests clean package'
+		sh 'cd project && ls && chmod +x ./build.sh &&./build.sh'
             }
         }
         stage('Test') {
             steps {
-                sh 'mvn test'
-            }
-            post {
-                always {
-                    junit 'target/surefire-reports/*.xml'
-                }
+                sh 'cd project && ls && chmod +x ./test.sh && ./test.sh'
             }
         }
         stage('deliver') {
             steps {
-                sh './jenkins/scripts/deliver.sh'
+		sh 'cd project && ls && chmod +x ./deliver.sh && ./deliver.sh'
             }
         }
+	stage('run') {
+	    steps {
+		sh 'cd project && chmod +x ./run.sh && ./run.sh'
+	    }
+	}
     }
 }
