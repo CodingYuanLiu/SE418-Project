@@ -29,12 +29,12 @@ public class ParseController {
     @Autowired
     private TongquService tongquService;
 
-
+/*
     public ParseController(){
         Path path = Paths.get(new File( getClass().getClassLoader().getResource("./static/jieba.dict").getPath() ).getAbsolutePath() ) ;
         WordDictionary.getInstance().loadUserDict( path ) ;
     }
-
+*/
 
 
     @RequestMapping("/act/test")

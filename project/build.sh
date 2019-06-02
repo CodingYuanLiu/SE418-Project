@@ -3,8 +3,8 @@ containers=$(docker ps -aq)
 if test -z "$containers"
 then echo "No containers running"
 else 
-	docker stop "$containers"
-	docker rm "$containers"
+	docker container stop $containers
+	docker container rm $containers
 fi
 cd service-discovery
 mvn -B -DskipTests clean package
