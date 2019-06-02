@@ -26,7 +26,6 @@ public class ParseController {
     @Autowired
     private TongquActService tongquActService;
 
-
     @Autowired
     private TongquService tongquService;
 
@@ -43,7 +42,7 @@ public class ParseController {
         return tongquService.getActFromText();
     }
 
-    @GetMapping("/act/parse")
+    @RequestMapping("/act/parse")
     public JSONArray getAllAct () {
         return tongquActService.getAllActs();
     }

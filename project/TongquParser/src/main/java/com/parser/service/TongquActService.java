@@ -8,5 +8,5 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @FeignClient("TONGQU-CRAWLER")
 public interface TongquActService {
     @RequestMapping(value = "/getact", method = RequestMethod.GET)
-    public JSONArray getAllActs();
+    JSONArray getAllActs();
 }
