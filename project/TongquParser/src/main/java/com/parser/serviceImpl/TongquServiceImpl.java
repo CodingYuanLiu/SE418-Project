@@ -16,7 +16,7 @@ import java.util.List;
 public class TongquServiceImpl implements TongquService {
 
     public JSONArray getActFromText() {
-        String jsonContent= FileUtil.ReadFile("./TongquParser/src/main/resources/test.json");
+        String jsonContent= FileUtil.ReadFile("./test.json");
         JiebaSegmenter segmenter = new JiebaSegmenter();
         JSONArray result = new JSONArray();
         for(Iterator it = JSON.parseArray(jsonContent).iterator(); it.hasNext();){

@@ -5,6 +5,7 @@ import com.huaban.analysis.jieba.WordDictionary;
 import com.parser.service.TongquActService;
 import com.parser.service.TongquService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -19,6 +20,7 @@ import java.nio.file.Paths;
 @RestController
 public class ParseController {
     @Autowired
+    @Qualifier("restTemplate")
     private RestTemplate restTemplate;
 
     @Autowired
@@ -30,7 +32,7 @@ public class ParseController {
 
 
     public ParseController(){
-        Path path = Paths.get(new File( getClass().getClassLoader().getResource("static/jieba.dict").getPath() ).getAbsolutePath() ) ;
+        Path path = Paths.get(new File( getClass().getClassLoader().getResource("./jieba.dict").getPath() ).getAbsolutePath() ) ;
         WordDictionary.getInstance().loadUserDict( path ) ;
     }
 
@@ -42,10 +44,8 @@ public class ParseController {
     }
 
     @GetMapping("/act/parse")
-    JSONArray getAllAct () {
+    public JSONArray getAllAct () {
         return tongquActService.getAllActs();
     }
-
-
 }
 
