@@ -16,10 +16,5 @@ pipeline {
 		sh 'cd project && ls && chmod +x ./deliver.sh && ./deliver.sh'
             }
         }
-	stage('run') {
-	    steps {
-		sh 'cd project && chmod +x ./run.sh && ./run.sh'
-	    }
-	}
     }
 }

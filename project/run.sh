@@ -5,8 +5,8 @@ containers=$(docker ps -aq)
 if test -z "$containers"
 	then echo "No containers running~"
 	else 
-		docker stop $(docker ps -aq)
-		docker rm $(docker ps -aq)
+		docker stop $containers
+		docker rm $containers
 fi
 
 # Run on demand
