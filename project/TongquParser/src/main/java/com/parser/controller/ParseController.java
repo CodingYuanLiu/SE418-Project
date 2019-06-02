@@ -31,7 +31,7 @@ public class ParseController {
 
 
     public ParseController(){
-        Path path = Paths.get(new File( getClass().getClassLoader().getResource("./jieba.dict").getPath() ).getAbsolutePath() ) ;
+        Path path = Paths.get(new File( getClass().getClassLoader().getResource("./static/jieba.dict").getPath() ).getAbsolutePath() ) ;
         WordDictionary.getInstance().loadUserDict( path ) ;
     }
 
