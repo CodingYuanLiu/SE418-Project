@@ -17,9 +17,9 @@ pipeline {
             }
         }
 	stage('run') {
-	    steps {
-		sh 'cd project && chmod +x ./run.sh && ./run.sh'
-	    }
-	}
+            steps {
+		sh 'cd project && ls && chmod +x ./run.sh && ./run.sh'
+            }
+        }
     }
 }
