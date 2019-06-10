@@ -16,6 +16,8 @@
                 <ItemDisplay entry="1081" :data1="data1"></ItemDisplay>
             </Col>
         </Row>
+        <Row>
+        </Row>
     </div>
 </template>
 
@@ -25,6 +27,8 @@
 
     // import Col from "iview/src";
     import ItemDisplay from "@/components/ItemDisplay";
+    import axios from 'axios'
+    import qs from 'qs'
 
     export default {
         name: 'home',
@@ -33,6 +37,28 @@
             ItemDisplay
             // Col
             // HelloWorld
+        },
+        methods: {
+            login() {
+                axios.post("http://47.102.101.146:10000/auth-server/oauth/token", qs.stringify({
+                    username: "summer855",
+                    password: "123456",
+                    clientId: "summer855",
+                    clientSecret: "123456",
+                    scope: "all",
+                    grant_type: "password"
+                }), {
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                        'Authorization': "Basic c3VtbWVyODU1OjEyMzQ1Ng=="
+                    }
+                }).then((response) => {
+                    console.log(response);
+                    this.token = response.data.access_token;
+                }).catch((error) => {
+                    console.log(error);
+                });
+            }
         }
     }
 </script>
