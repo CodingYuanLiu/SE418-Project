@@ -16,7 +16,7 @@ import java.nio.charset.Charset;
 public class MyZuulFallbackProvider implements FallbackProvider {
     @Override
     public String getRoute() {
-        return "*";
+        return "";
     }
 
     @Override
