@@ -1,10 +1,9 @@
 package com.segroup.tongqucrawler.Repository;
 
 import com.segroup.tongqucrawler.Entity.TCSystem;
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.mongodb.repository.MongoRepository;
 
-import java.util.Collection;
-
-public interface TCSystemRepository extends JpaRepository<TCSystem, String> {
+public interface TCSystemRepository extends MongoRepository<TCSystem, String> {
     public TCSystem findByTcskey(String tcskey);
+    public void deleteByTcskey(String tcskey);
 }

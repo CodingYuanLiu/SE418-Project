@@ -19,8 +19,22 @@ public class ScheduledTask {
     @Autowired
     private TCSystemRepository tcSystemRepository;
 
-    @Scheduled(cron = "0 0/1 * * * ?")
+    @Scheduled(cron = "0 0/10 * * * ?")
     private void updateTongqu() {
+        // Lock
+        TCSystem lock = tcSystemRepository.findByTcskey("lock");
+        if (lock == null) {
+            lock = new TCSystem("lock", "1");
+            tcSystemRepository.save(lock);
+        } else if (lock.get().equals("1")) {
+            System.out.println("[TongquCrawler] A updating process is running. Stop.");
+            return;
+        } else {
+            tcSystemRepository.deleteByTcskey("lock");
+            lock = new TCSystem("lock", "1");
+            tcSystemRepository.save(lock);
+        }
+
         TCSystem last_updated = tcSystemRepository.findByTcskey("last_updated");
         if (last_updated == null) {
             last_updated = new TCSystem("last_updated", "0");
@@ -42,6 +56,7 @@ public class ScheduledTask {
                 tongquCrawler.setActId(actid);
                 if (tongquCrawler.isActExisted()) {
                     act = new Act(tongquCrawler.getMinActJson());
+                    actRepository.deleteByActid(actid);
                     actRepository.save(act);
                 }
             }
@@ -49,5 +64,8 @@ public class ScheduledTask {
         System.out.println("[TongquCrawler] Complete. Latest update: act #" + latestActid);
         last_updated.set(String.valueOf(latestActid));
         tcSystemRepository.save(last_updated);
+        tcSystemRepository.deleteByTcskey("lock");
+        lock = new TCSystem("lock", "0");
+        tcSystemRepository.save(lock);
     }
 }

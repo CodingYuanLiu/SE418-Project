@@ -1,12 +1,14 @@
 package com.segroup.tongqucrawler.Entity;
 
+import lombok.Data;
 import net.sf.json.JSONObject;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
 
-@Entity
-@Table(name = "act")
+@Data
+@Document(collection = "act")
 public class Act {
     @Id
     public Integer actid;

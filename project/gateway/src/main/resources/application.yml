@@ -1,0 +1,43 @@
+server:
+  port: 10000
+spring:
+  application:
+    name: api-gateway
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://eureka-server:9000/eureka/
+  instance:
+    prefer-ip-address: true
+zuul:
+  routes:
+    resourse:
+      service-id: tongqu-parser
+      path: /resources/tongqu
+
+  sensitive-headers: Cookie, Set-Cookie
+  host:
+    connect-timeout-millis: 60000
+    socket-timeout-millis: 60000
+  #ribbon-isolation-strategy: thread
+ribbon:
+  ConnectTimeout: 10000
+  ReadTimeout: 10000
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    hystrix:
+      stream:
+        enabled: true
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 60000
