@@ -56,6 +56,7 @@ public class ScheduledTask {
                 tongquCrawler.setActId(actid);
                 if (tongquCrawler.isActExisted()) {
                     act = new Act(tongquCrawler.getMinActJson());
+                    actRepository.deleteByActid(actid);
                     actRepository.save(act);
                 }
             }
