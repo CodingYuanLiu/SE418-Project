@@ -4,6 +4,7 @@ import com.netflix.discovery.converters.Auto;
 import com.se418.project.serviceconsumer.Dto.ActivityDto;
 import com.se418.project.serviceconsumer.Entity.Activity;
 import com.se418.project.serviceconsumer.Entity.Person;
+import com.se418.project.serviceconsumer.service.ProviderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,6 +24,10 @@ public class ActivityController {
     @Autowired
     @Qualifier(value = "restTemplate")
     private RestTemplate restTemplate;
+
+    @Autowired
+    private ProviderService providerService;
+
     private final Activity[] activities = {
             new Activity(
                     1,
@@ -45,7 +50,7 @@ public class ActivityController {
         if (id == 1 || id == 2) {
             ActivityDto activityDto = new ActivityDto(this.activities[id - 1]);
             for (String name: this.activities[id - 1].getPeople()) {
-                activityDto.getPeople().add(getPerson(name));
+                activityDto.getPeople().add(providerService.getByFeign(name));
                 //getPerson(name);
             }
             return activityDto;
