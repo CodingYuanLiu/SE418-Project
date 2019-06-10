@@ -28,6 +28,7 @@ public class ParserImpl implements Parser {
         for(Iterator it = JSON.parseArray(jsonContent).iterator(); it.hasNext();){
             JSONObject activity = (JSONObject)it.next();
             String body = activity.getString("body_text");
+            body = body + "," + activity.getString("ruledesc_text");
             List<SegToken> SegtokenList = segmenter.process(body, JiebaSegmenter.SegMode.SEARCH);
             /* Search for special seiee activities */
             for(int i = 0; i < SegtokenList.size();i++){
