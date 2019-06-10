@@ -1,0 +1,2 @@
+(window["webpackJsonp"]=window["webpackJsonp"]||[]).push([["about"],{f820:function(t,e,n){"use strict";n.r(e);var a=function(){var t=this,e=t.$createElement;t._self._c;return t._m(0)},s=[function(){var t=this,e=t.$createElement,n=t._self._c||e;return n("div",{staticClass:"about",staticStyle:{margin:"30px"}},[n("h1",[t._v("素拓活动推荐系统")]),n("p",[t._v("该系统筛选出同去上提供素拓的活动并展示")]),n("p",[t._v("因为仅是为了课程项目，因此登录的用户名密码写死在了逻辑里面，也没有注册功能，仅需点击登录即可获取信息")])])}],c=n("2877"),l={},r=Object(c["a"])(l,a,s,!1,null,null,null);e["default"]=r.exports}}]);
+//# sourceMappingURL=about.694c2c1f.js.map
