@@ -14,3 +14,6 @@ cd ../TongquParser
 mvn -B -DskipTests clean package
 cd ../gateway/
 mvn -B -DskipTests clean package
+cd ../frontend/
+docker build -t tongqu-frontend .
+
