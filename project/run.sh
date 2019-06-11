@@ -19,3 +19,4 @@ docker run -p 9200:9200 -d --name=tongqu-parser --net=host \
 	summer855/parser
 docker run -p 10000:10000 -d --name=api-gateway --net=host \
 	summer855/gateway
+docker run -p 11000:80 -d --name=frontend tongqu-frontend
