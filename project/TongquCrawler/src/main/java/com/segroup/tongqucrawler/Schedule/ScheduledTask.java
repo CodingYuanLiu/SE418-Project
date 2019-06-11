@@ -63,6 +63,7 @@ public class ScheduledTask {
         }
         System.out.println("[TongquCrawler] Complete. Latest update: act #" + latestActid);
         last_updated.set(String.valueOf(latestActid));
+        tcSystemRepository.deleteByTcskey("last_updated");
         tcSystemRepository.save(last_updated);
         tcSystemRepository.deleteByTcskey("lock");
         lock = new TCSystem("lock", "0");
