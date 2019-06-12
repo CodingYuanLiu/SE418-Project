@@ -17,7 +17,6 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @EnableZuulProxy
 @EnableCircuitBreaker
 public class GatewayApplication {
-
     @Bean
     protected WebMvcConfigurer corsConfigure() {
         return new WebMvcConfigurer() {
@@ -30,7 +29,6 @@ public class GatewayApplication {
             }
         };
     }
-
     public static void main(String[] args) {
         SpringApplication.run(GatewayApplication.class, args);
     }
