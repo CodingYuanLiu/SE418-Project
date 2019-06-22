@@ -83,9 +83,210 @@ In our project, it plays the role of `Service provider`.
 
 #### auth-server
 
-`auth-server` is an `OAuth` server. It protects `TongquParser`. It uses the most simple method to realize the function of `OAuth`. That means what `OAuth` does is simply inherits from Template and applies default method.
+`auth-server` is an `OAuth` server. It protects `TongquParser`. It uses the most simple method to realize the function of `OAuth`. That means what `auth-server` does is just inherits from Template and applies default method.
 
 #### service-discovery & api-gateway
 
 `service-discovery` is a microservice which specially discovers services and manipulate them.<br/>
 `api-gateway` is a microservice which unifys common router.
+
+#### Feign
+
+```java
+@FeignClient("TONGQU-CRAWLER")
+public interface TongquActService {
+    @RequestMapping(value = "/getact", method = RequestMethod.GET)
+    String getAllActs();
+}
+```
+
+In that this project is just a simple try using spring cloud, we simply define one method with one provider.
+
+#### Ribbon
+
+```java
+@SpringBootApplication
+@EnableEurekaClient
+@EnableResourceServer
+@EnableFeignClients
+public class ParserApplication {
+
+	@Bean(value = "restTemplate")
+	@LoadBalanced
+	RestTemplate restTemplate() {
+		return new RestTemplate();
+	}
+
+	@Bean
+	public IRule iRule() {
+		return new RandomRule();
+	}
+
+
+	public static void main(String[] args) {
+		SpringApplication.run(ParserApplication.class, args);
+	}
+
+}
+```
+
+The above code segment is about ribbon. We choose `RandomRule` in our project.<br/>
+We also implements our own load balanced rule. See the following code segment
+
+```java
+@SpringBootApplication
+@EnableEurekaClient
+@EnableFeignClients
+public class ServiceConsumerApplication {
+
+	@Bean(value = "restTemplate")
+	@LoadBalanced
+	RestTemplate restTemplate() {
+		return new RestTemplate();
+	}
+
+	@Bean
+	public IRule myOwnIRule() {
+		return new WeightedRoundRobinRule();
+	}
+
+	public static void main(String[] args) {
+		SpringApplication.run(ServiceConsumerApplication.class, args);
+	}
+
+}
+```
+
+```java
+public Server choose(ILoadBalancer lb, Object key) {
+        if (this.totalWeight == 0) {
+            initialize(lb);
+        }
+        if (lb == null) {
+            log.warn("no load balancer");
+            return null;
+        }
+
+        if (totalWeight == 0) {
+            log.warn("No up servers available from load balancer: " + lb);
+        }
+
+        Server server = null;
+        int count = 0;
+        while (server == null && count++ < 10) {
+            List<Server> reachableServers = lb.getReachableServers();
+            List<Server> allServers = lb.getAllServers();
+            int upCount = reachableServers.size();
+            int serverCount = allServers.size();
+
+            if ((upCount == 0) || (serverCount == 0)) {
+                log.warn("No up servers available from load balancer: " + lb);
+                return null;
+            }
+
+            int nextServerIndex = getIndex(incrementAndGetModulo(totalWeight));
+            server = allServers.get(nextServerIndex);
+
+            if (server == null) {
+                /* Transient. */
+                Thread.yield();
+                continue;
+            }
+
+            if (server.isAlive() && (server.isReadyToServe())) {
+                return (server);
+            }
+
+            // Next.
+            server = null;
+        }
+
+        if (count >= 10) {
+            log.warn("No available alive servers after 10 tries from load balancer: "
+                    + lb);
+        }
+        return server;
+    }
+```
+
+The above code is mainly inspired by the implementation of `WeightedResponseTimeRule` written by `stonse` and `RoundRobinRule` written by `stonse` and `Nikos Michalakis`. We combine them together. The reason why we did not apply our own rule is that our own implementation is not so strong and may recur errors.
+
+#### Histrix
+
+We also used `Histrix` in our project.
+
+```java
+@SpringBootApplication
+@EnableZuulProxy
+@EnableCircuitBreaker
+public class GatewayApplication {
+    @Bean
+    protected WebMvcConfigurer corsConfigure() {
+        return new WebMvcConfigurer() {
+            @Override
+            public void addCorsMappings(CorsRegistry registry) {
+                registry.addMapping("/**")
+                        .allowedHeaders("*")
+                        .allowedMethods("*")
+                        .allowedOrigins("*");
+            }
+        };
+    }
+    public static void main(String[] args) {
+        SpringApplication.run(GatewayApplication.class, args);
+    }
+
+}
+
+```
+
+```java
+@Component
+public class MyZuulFallbackProvider implements FallbackProvider {
+    @Override
+    public String getRoute() {
+        return "";
+    }
+
+    @Override
+    public ClientHttpResponse fallbackResponse(String route, Throwable cause) {
+        return new ClientHttpResponse() {
+            @Override
+            public HttpStatus getStatusCode() throws IOException {
+                return HttpStatus.OK;
+            }
+
+            @Override
+            public int getRawStatusCode() throws IOException {
+                return this.getStatusCode().value();
+            }
+
+            @Override
+            public String getStatusText() throws IOException {
+                return this.getStatusCode().getReasonPhrase();
+            }
+
+            @Override
+            public void close() {
+                //...
+            }
+
+            @Override
+            public InputStream getBody() throws IOException {
+                return new ByteArrayInputStream(("cannot provide service for" + route).getBytes());
+            }
+
+            @Override
+            public HttpHeaders getHeaders() {
+                HttpHeaders headers = new HttpHeaders();
+                MediaType mediaType = new MediaType("application", "json", Charset.forName("UTF-8"));
+                headers.setContentType(mediaType);
+                return headers;
+            }
+        };
+    }
+}
+
+```
+
+Whenever `TongquParser` can not be accessed, we provide necessary message and run in degrade mode.
