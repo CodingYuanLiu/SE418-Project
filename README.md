@@ -30,7 +30,7 @@ Crawl the data from Tongqu website with web crawler, analyse the content(titles 
 
 ## Brief Introduction
 
-### Basic Function
+### Basic Functions
 
 Our project can be seen here:
 
@@ -79,6 +79,15 @@ In our project, it plays the role of `Service provider`.
 #### TongquParser
 
 `TongquParser` is `service consumer` in our project. Every time the `frontend` fetch activities information from it, it will fetch the raw data from `TongquCrawler` and parse the data and return those contains `素拓`.<br/>
+In order to partition Chinese sentences into single words, we use the java version of "Jieba" tools as bellow:
+```xml
+<dependency>
+	<groupId>com.huaban</groupId>
+	<artifactId>jieba-analysis</artifactId>
+	<version>1.0.2</version>
+</dependency>
+``` 
+The parser can not only tell whether a activity contains `素拓` or not, but also differentiate their `kind` with a specific `score`. <br/>
 `TongquParser` uses `Ribbon` and `Feign` to balance the server load and simpilify client calls. We also apply histrix in our project and whenever some error happens, the project will run in degrade mode which indicate that the server may not serve well.
 
 #### auth-server
