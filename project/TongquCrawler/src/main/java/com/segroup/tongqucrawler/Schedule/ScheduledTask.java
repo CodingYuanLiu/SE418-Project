@@ -19,7 +19,7 @@ public class ScheduledTask {
     @Autowired
     private TCSystemRepository tcSystemRepository;
 
-    @Scheduled(cron = "0 0/10 * * * ?")
+    @Scheduled(cron = "0 0/5 * * * ?")
     private void updateTongqu() {
         // Lock
         TCSystem lock = tcSystemRepository.findByTcskey("lock");
@@ -43,7 +43,7 @@ public class ScheduledTask {
         System.out.println("[TongquCrawler] Last update: act #" + updaterange);
         TongquCrawler tc = new TongquCrawler();
         int latestActid = tc.getLatestActId();
-        for (int actid = 1; actid <= latestActid; actid++) {
+        for (int actid = 19000; actid <= latestActid; actid++) {
             Act act = actRepository.findByActid(actid);
             if (act == null || act.time_status == 1) {
                 if (act == null && actid <= updaterange) continue;
