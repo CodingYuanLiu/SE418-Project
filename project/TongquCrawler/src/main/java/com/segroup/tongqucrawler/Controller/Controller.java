@@ -24,7 +24,7 @@ public class Controller {
 
     @RequestMapping(value = "/getact", method = RequestMethod.GET)
     @ResponseBody
-    public JSONArray test() {
+    public JSONArray getact() {
         JSONArray response = new JSONArray();
         List<Act> actList = actRepository.findAll();
         for (Act act : actList) {

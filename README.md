@@ -20,7 +20,7 @@ Crawl the data from Tongqu website with web crawler, analyse the content(titles 
 - Vue
 - OAuth
 - Jenkins + BlueOcean
-- Python + Selenium (For crawler)
+- MongoDB + HttpClient (For Crawling)
 
 ### Coding Standard
 
@@ -75,6 +75,42 @@ Username and password of our Jenkins are both admin1.
 `TongquCrawler` is a crawler and it crawls `同去网`, fetches json data and stores in MongoDB.
 
 In our project, it plays the role of `Service provider`.
+
+By using scheduled task and JPA, `TongquCrawler` can fetch data every 5 minutes and store it to database. At the same time, `TongquCrawler` provides a url `/update?from=${actid}` to update act by user.
+
+```java
+@Scheduled(cron = "0 0/5 * * * ?")
+private void updateTongqu() {
+    ...
+}
+```
+or
+```java
+@RequestMapping(value = "/update", method = RequestMethod.POST)
+@ResponseBody
+private void updateTongqu() {
+    ...
+}
+```
+
+There is a crawler system collection in mongoDB, named `tcsystem`, having key and value. It only stores two tuples, `lock` and `last_updated`:
+
+`lock` gurantees there will be only one running update process. For example, if there is a running update process calling by scheduled task when user posting url `/update`, the program will output:
+```
+[TongquCrawler] A updating process is running. Stop.
+```
+
+`last_updated` will record last updated `actid`. Since acts in `同去网` is orderred by `actid` from 1 and one by one, program can remember the latest act. When program updates, it will only fetch active act (not finished), and new act (`actid` bigger than `last_updated`). With this strategy, crawler can save resources by avoid updating finished acts.
+
+Then crawler provides a get url `/getact` to get all **active** acts, due to user only concentrate on them.
+
+```java
+@RequestMapping(value = "/getact", method = RequestMethod.GET)
+@ResponseBody
+public JSONArray getact() {
+    ...
+}
+```
 
 #### TongquParser
 
