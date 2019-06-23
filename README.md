@@ -20,6 +20,7 @@ Crawl the data from Tongqu website with web crawler, analyse the content(titles 
 - Vue
 - OAuth
 - Jenkins + BlueOcean
+- Jieba (Java version)
 - MongoDB + HttpClient (For Crawling)
 
 ### Coding Standard
@@ -31,6 +32,7 @@ Crawl the data from Tongqu website with web crawler, analyse the content(titles 
 ## Brief Introduction
 
 ### Basic Functions
+We crawl the data from "tongqu" by "TongquCrawler" service, store it into mongoDB. TongquParser service then fetches the data and parses it. The front end page shows the result.
 
 Our project can be seen here:
 
@@ -44,16 +46,16 @@ We have only one user so you don't need to input the username and the password. 
 
 ![avatar](./imgs/16.png)
 
-We have crawled the data from "tongqu" and parsed it. The page shows the result. Simply click the title of the activity at the home page to jump to the targeting activity page.
+ Simply click the title of the activity at the home page to jump to the targeting activity page.
 
 ![avatar](./imgs/17.png)
 
 ### Structure
-
 The microservices of the project are in ./project folder as bellow:
+<br/>
 ![avatar](./imgs/11.png)
 
-The Eureka page is at http://47.102.101.146:9000/, from which you can see where some of our microservices are deployed:
+We have 2 Crawler services and implemented load balance, as you can see in the Eureka page. The Eureka page is at http://47.102.101.146:9000/, from which you can see where some of our microservices are deployed:
 ![avatar](./imgs/18.png)
 
 ### Jenkins
