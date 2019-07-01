@@ -64,8 +64,14 @@ public class ParserImpl implements Parser {
                     break;
                 }
                 if(str.equals("素拓")){
-                    activity.put("Qnum","0");
                     activity.put("Score","0");
+                    String prestr = i > 1 ? SegtokenList.get(i - 2).word : "";
+                    if(i > 1 && prestr.equals("1151") || prestr.equals("1152") || prestr.equals("1081")){
+                        activity.put("Qnum",prestr);
+                    }
+                    else{
+                        activity.put("Qnum","0");
+                    }
                     result.add(activity);
                     break;
                 }
